@@ -1,0 +1,35 @@
+﻿@page "/add-contact"
+
+<ContactForm OnSubmit="HandleFormSubmit" ContactModel="@ContactModel">
+    <Fields>
+        <div>
+            <label for="name">Name:</label>
+            <input id="name" class="form-control" @bind="ContactModel.Name" />
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input id="email" class="form-control" @bind="ContactModel.Email" />
+        </div>
+        <div>
+            <label for="message">Message:</label>
+            <textarea id="message" class="form-control" @bind="ContactModel.Message"></textarea>
+        </div>
+    </Fields>
+</ContactForm>
+
+@code {
+    private Contact ContactModel { get; set; } = new Contact();
+    [Inject] private IContactService ContactService { get; set; }
+
+    private async Task HandleFormSubmit(Contact contact)
+    {
+        try
+        {
+            await ContactService.SaveContactAsync(ContactModel);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}

@@ -1,0 +1,22 @@
+﻿<form @onsubmit="HandleSubmit">
+    @Fields
+
+    <div>
+        <button type="submit" class="btn btn-primary" disabled="@IsSubmitting">Send</button>
+    </div>
+
+    @if (ValidationErrors.Count > 0)
+    {
+        <ul class="text-danger">
+            @foreach (var error in ValidationErrors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    }
+</form>
+
+@if (IsSubmitting)
+{
+    <p>Submitting...</p>
+}
